@@ -23,11 +23,13 @@ public class MainDriver {
         final String REDUCE_GPS = "g";
         final String REDUCE_GPS_RATIO = "r";
 
+        String jobsToRun = args[0];
+
         int results = 0;
 
         String[] runnerArgs = Arrays.copyOfRange(args, 1, args.length);
 
-        if (args[0].equals(REDUCE_EARNINGS)) {
+        if (jobsToRun.contains(REDUCE_EARNINGS)) {
             int tempResult = ToolRunner.run(new Configuration(), new EarningDriver(), runnerArgs);
 
             System.out.println("temp result of running reduce earnings: " + tempResult);
@@ -39,11 +41,11 @@ public class MainDriver {
             results += tempResult; 
         }
 
-        if (args[0].equals(REDUCE_GPS)) {
+        if (jobsToRun.contains(REDUCE_GPS)) {
 
         }
 
-        if (args[0].equals(REDUCE_GPS_RATIO)) {
+        if (jobsToRun.contains(REDUCE_GPS_RATIO)) {
 
         }
 
