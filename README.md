@@ -59,7 +59,8 @@ To compile the project and create a single jar file with all dependencies:
 Inside your shell with Hadoop
 
 To run top earners per minute, change runType to e, then do 
-make run. 
+make run. To run multiple jobs, set runType to a concatenation of 
+corresponding letters.
 
 Running as Java Application:
 
