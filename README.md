@@ -58,6 +58,9 @@ To compile the project and create a single jar file with all dependencies:
 ## Run your application
 Inside your shell with Hadoop
 
+To run top earners per minute, change runType to e, then do 
+make run. 
+
 Running as Java Application:
 
 ```java -jar target/MapReduce-WordCount-example-0.1-SNAPSHOT-jar-with-dependencies.jar SOME-Text-Fiel.txt  output``` 
