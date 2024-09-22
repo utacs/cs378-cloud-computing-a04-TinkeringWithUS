@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.join.TupleWritable;
@@ -25,7 +26,7 @@ public class EarningDriver extends Configured implements Tool {
 	 */
 
 	public static void main(String[] args) throws Exception {
-		int res = ToolRunner.run(new Configuration(), new WordCount(), args);
+		int res = ToolRunner.run(new Configuration(), new EarningDriver(), args);
 		System.exit(res);
 	}
 
@@ -50,7 +51,7 @@ public class EarningDriver extends Configured implements Tool {
 
 			// specify output types
 			job.setOutputKeyClass(Text.class);
-			job.setOutputValueClass(TupleWritable.class);
+			job.setOutputValueClass(FloatWritable.class);
 
 			// specify input and output directories
 			FileInputFormat.addInputPath(job, inputPath);
@@ -58,6 +59,8 @@ public class EarningDriver extends Configured implements Tool {
 
 			FileOutputFormat.setOutputPath(job, outputPath);
 			job.setOutputFormatClass(TextOutputFormat.class);
+
+			job.setNumReduceTasks(1);
 
 			return (job.waitForCompletion(true) ? 0 : 1);
 

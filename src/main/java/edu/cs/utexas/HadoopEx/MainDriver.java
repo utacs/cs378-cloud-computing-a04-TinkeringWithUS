@@ -3,8 +3,6 @@ package edu.cs.utexas.HadoopEx;
 import java.util.Arrays;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 public class MainDriver {
@@ -32,11 +30,13 @@ public class MainDriver {
         if (args[0].equals(REDUCE_EARNINGS)) {
             int tempResult = ToolRunner.run(new Configuration(), new EarningDriver(), runnerArgs);
 
-            if (tempResult <= 0) {
-                System.out.println("Failed to run Map Reduce for Earnings per minute");
-            } else {
-                results += tempResult;
+            System.out.println("temp result of running reduce earnings: " + tempResult);
+
+            if(tempResult != 0) {
+                System.out.println("Failed to run Earnings reducer");
             }
+
+            results += tempResult; 
         }
 
         if (args[0].equals(REDUCE_GPS)) {

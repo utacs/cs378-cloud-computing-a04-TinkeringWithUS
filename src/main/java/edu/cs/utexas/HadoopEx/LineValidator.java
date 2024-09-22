@@ -11,6 +11,9 @@ public class LineValidator {
     LineValidator() {
         try {
             errorWriter = new FileWriter(ERROR_FILENAME);
+
+            // erase previous error
+            errorWriter.write("");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,7 +110,6 @@ public class LineValidator {
         float ACCEPTABLE_FLOAT_THRESHOLD = 0.0001f;
 
         if ((sumOfAllMoney / 2) - 2 * totalAmount >= ACCEPTABLE_FLOAT_THRESHOLD) {
-            System.out.println("mismatch of total amounts");
             recordError("Mismatch between total amount and rest of dollar amounts. Total Amount: " +
                     totalAmount + ". sum of rest: " + (sumOfAllMoney / 2), ErrorType.INVALID_LINE);
             return true;
