@@ -1,6 +1,7 @@
 package edu.cs.utexas.HadoopEx;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.io.IOException;
@@ -11,13 +12,12 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class EarningsReducer extends Reducer<Text, Text, Text, FloatWritable> {
 
-    private final int DESIRED_RANKINGS = 10;
+    // private final int DESIRED_RANKINGS = 10;
 
     private HashMap<String, EarningItem> driverToEarningItem = new HashMap<>();
 
     public void reduce(Text text, Iterable<Text> values, Context context)
             throws IOException, InterruptedException {
-
         String driverId = text.toString(); 
 
         for(Text value : values) {
@@ -32,8 +32,6 @@ public class EarningsReducer extends Reducer<Text, Text, Text, FloatWritable> {
             } else {
                 driverToEarningItem.put(driverId, new EarningItem(driverId, earnings, tripTime));
             }
-
-            context.write(text, new FloatWritable(earnings));
         }
     }
 
@@ -58,17 +56,13 @@ public class EarningsReducer extends Reducer<Text, Text, Text, FloatWritable> {
             };
         });
 
-        int rank = 0;
+        Iterator<EarningItem> itr = itemsToSort.iterator();
 
-        for(EarningItem item : itemsToSort) {
-            if(rank == DESIRED_RANKINGS) {
-                break;
-            }
+        for(int rank = 0; rank < 10; rank++) {
+            EarningItem item = itr.next();
+
             float earningsPerMinute = item.totalEarnings / ( item.totalTimeSeconds / 60);
             context.write(new Text(item.driverId), new FloatWritable(earningsPerMinute));
-
-            rank++;
         }
     }
-
 }

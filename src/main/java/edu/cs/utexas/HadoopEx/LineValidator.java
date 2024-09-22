@@ -115,12 +115,12 @@ public class LineValidator {
             return true;
         }
 
-        final float TOTAL_AMOUNT_THRESHOLD = 0.001f;
+        // final float TOTAL_AMOUNT_THRESHOLD = 0.001f;
 
-        if (totalAmount > TOTAL_AMOUNT_THRESHOLD) {
-            recordError("Total amount greater than 500 threshold.", ErrorType.INVALID_LINE);
-            return true;
-        }
+        // if (totalAmount > TOTAL_AMOUNT_THRESHOLD) {
+        //     recordError("Total amount greater than 500 threshold.", ErrorType.INVALID_LINE);
+        //     return true;
+        // }
 
         return false;
     }
