@@ -3,6 +3,9 @@ outputFolder = output
 
 runType = e
 
+fetch_data:
+	wget https://storage.googleapis.com/cs378/taxi-data-sorted-small.csv
+
 run: 
 	mvn clean package  
 	rm -rf output
