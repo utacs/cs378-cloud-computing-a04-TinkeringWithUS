@@ -43,7 +43,17 @@ public class MainDriver {
         }
 
         if (jobsToRun.contains(REDUCE_GPS)) {
-            
+            String[] gpsArgs = new String[] { inputFile, "gpsOutput" };
+
+            int tempResult = ToolRunner.run(new Configuration(), new GpsDriver(), gpsArgs);
+
+            System.out.println("temp result of running reduce gps errors: " + tempResult);
+
+            if(tempResult != 0) {
+                System.out.println("Failed to run Gps reducer");
+            }
+
+            results += tempResult; 
         }
 
         if (jobsToRun.contains(REDUCE_GPS_RATIO)) {
