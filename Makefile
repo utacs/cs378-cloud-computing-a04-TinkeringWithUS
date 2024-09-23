@@ -16,7 +16,7 @@ run:
 
 add: 
 	mvn clean
-	rm -rf $(outputfolders)
+	rm -rf $(outputFolders)
 	git add . 
 	git status
 

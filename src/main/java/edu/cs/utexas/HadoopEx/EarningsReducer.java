@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class EarningsReducer extends Reducer<Text, Text, Text, FloatWritable> {
 
-    // private final int DESIRED_RANKINGS = 10;
+    private final int DESIRED_RANKINGS = 10;
 
     private HashMap<String, EarningItem> driverToEarningItem = new HashMap<>();
 
@@ -58,7 +58,7 @@ public class EarningsReducer extends Reducer<Text, Text, Text, FloatWritable> {
 
         Iterator<EarningItem> itr = itemsToSort.iterator();
 
-        for(int rank = 0; rank < 10; rank++) {
+        for(int rank = 0; rank < DESIRED_RANKINGS; rank++) {
             EarningItem item = itr.next();
 
             float earningsPerMinute = item.totalEarnings / ( item.totalTimeSeconds / 60);

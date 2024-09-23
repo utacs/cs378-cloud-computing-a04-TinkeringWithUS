@@ -18,8 +18,6 @@ public class GpsMapper extends Mapper<Object, Text, IntWritable, LongWritable> {
 			throws IOException, InterruptedException {
         String line = value.toString();
 
-        // TODO: enhance validation to cover float casting for  
-        // pickup lat/long, dropoff lat/long
         ErrorType errorType = validator.validateLine(line);
 
         if(errorType == ErrorType.GPS_ERROR) {
@@ -28,14 +26,14 @@ public class GpsMapper extends Mapper<Object, Text, IntWritable, LongWritable> {
             String pickupTime = fields[2];
             String dropoffTime = fields[3];
 
-            String pickupLong = fields[6];
-            String pickupLat = fields[7];
+            float pickupLong = Float.parseFloat(fields[6]);
+            float pickupLat = Float.parseFloat(fields[7]);
 
-            String dropoffLong = fields[8];
-            String dropoffLat = fields[9];
+            float dropoffLong = Float.parseFloat(fields[8]);
+            float dropoffLat = Float.parseFloat(fields[9]);
 
-            if(pickupLat.length() == 0 || pickupLong.length() == 0 || 
-                    pickupLat.equals("0") || pickupLong.equals("0")) {
+            if (fields[6].length() == 0 || fields[7].length() == 0 ||
+                    pickupLat == 0 || pickupLong == 0) {
                 // extract the hours from pickup time
                 // format of pick up timeis  (yyyy-mm-dd hh:mm:ss)
                 int hours = Integer.parseInt(pickupTime.split(" ")[1].split(":")[0]);
@@ -43,8 +41,8 @@ public class GpsMapper extends Mapper<Object, Text, IntWritable, LongWritable> {
                 context.write(new IntWritable(hours), new LongWritable(1));
             }
 
-            if(dropoffLat.length() == 0 || dropoffLong.length() == 0 || 
-                    dropoffLat.equals("0") || dropoffLong.equals("0")) {
+            if (fields[8].length() == 0 || fields[9].length() == 0 ||
+                    dropoffLat == 0 || dropoffLong == 0) {
                 int hours = Integer.parseInt(dropoffTime.split(" ")[1].split(":")[0]);
 
                 context.write(new IntWritable(hours), new LongWritable(1));
