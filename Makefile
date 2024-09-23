@@ -1,6 +1,9 @@
 inputFile = taxi-data-sorted-small.csv 
 outputFolder = output
 
+outputFolders := gpsOutput earningOutput
+
+
 runType = eg
 
 fetch_data:
@@ -8,18 +11,15 @@ fetch_data:
 
 run: 
 	mvn clean package  
-	rm -rf gpsOutput
-	rm -rf earningOutput 
+	rm -rf $(outputFolders)
 	java -jar target/MapReduce-WordCount-example-0.1-SNAPSHOT-jar-with-dependencies.jar $(runType) $(inputFile) $(outputFolder) 
 
 add: 
 	mvn clean
-	rm -rf gpsOutput
-	rm -rf earningOutput 
+	rm -rf $(outputfolders)
 	git add . 
 	git status
 
 clean: 
 	mvn clean
-	rm -rf gpsOutput
-	rm -rf earningOutput 
+	rm -rf $(outputFolders)
