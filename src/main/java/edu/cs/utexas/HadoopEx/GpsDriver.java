@@ -41,7 +41,7 @@ public class GpsDriver extends Configured implements Tool {
 			Configuration conf = new Configuration();
 
 			Job job = new Job(conf, "GPSErrorsPerHour");
-			job.setJarByClass(EarningDriver.class);
+			job.setJarByClass(GpsDriver.class);
 
 			// specify a Mapper
 			job.setMapperClass(GpsMapper.class);
