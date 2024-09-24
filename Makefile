@@ -1,10 +1,10 @@
 inputFile = taxi-data-sorted-small.csv 
 outputFolder = output
 
-outputFolders := gpsOutput earningOutput
+outputFolders := gpsOutput earningOutput gpsRatioOutput
 
 
-runType = eg
+runType = egr
 
 fetch_data:
 	wget https://storage.googleapis.com/cs378/taxi-data-sorted-small.csv
