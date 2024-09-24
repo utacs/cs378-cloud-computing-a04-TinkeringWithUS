@@ -59,7 +59,7 @@ public class MainDriver {
         if (jobsToRun.contains(REDUCE_GPS_RATIO)) {
             String[] gpsRatioArgs = new String[] { inputFile, "gpsRatioOutput" };
 
-            int tempResult = ToolRunner.run(new Configuration(), new GpsDriver(), gpsRatioArgs);
+            int tempResult = ToolRunner.run(new Configuration(), new GpsTopKDriver(), gpsRatioArgs);
 
             System.out.println("temp result of running reduce gps RATIO errors: " + tempResult);
 

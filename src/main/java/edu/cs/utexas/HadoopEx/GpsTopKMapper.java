@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import java.time.format.DateTimeFormatter;
 import java.util.PriorityQueue;
 
-public class GpsTopKMapper extends Mapper<Text, FloatWritable, Text, FloatWritable> {
+public class GpsTopKMapper extends Mapper<Text, Text, Text, FloatWritable> {
 	private Logger logger = Logger.getLogger(GpsTopKMapper.class);
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss");
@@ -19,12 +19,12 @@ public class GpsTopKMapper extends Mapper<Text, FloatWritable, Text, FloatWritab
 
 	public void setup(Context context) {
 		pq = new PriorityQueue<>();
-        // TODO, call this method
 	}
 
-	public void map(Text key, FloatWritable value, Context context) 
+	public void map(Text key, Text value, Context context) 
 			throws IOException, InterruptedException {
-        pq.add(new WordAndCount(new Text(key), new FloatWritable(value.get())) );
+		float ratio =  Float.parseFloat(value.toString());
+        pq.add(new WordAndCount(new Text(key), new FloatWritable(ratio)) );
         if (pq.size() > 5) {
             pq.poll();
         }

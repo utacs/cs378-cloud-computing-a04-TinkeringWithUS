@@ -13,3 +13,5 @@ buildNumber.properties
 
 *.csv
 *.txt
+gpsRatioOutput/
+intermediateRatio/

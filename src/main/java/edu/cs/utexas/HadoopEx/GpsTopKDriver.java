@@ -9,6 +9,7 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
@@ -36,11 +37,12 @@ public class GpsTopKDriver extends Configured implements Tool {
 	public int run(String args[]) {
 		Path inputPath = new Path(args[0]);
 		Path outputPath = new Path(args[1]);
+		Path intermediate = new Path("intermediateRatio");
 
 		try {
 			Configuration conf = new Configuration();
 
-			Job job = new Job(conf, "GPSErrorsPerHour");
+			Job job = new Job(conf, "GPSErrorRatio");
 			job.setJarByClass(GpsTopKDriver.class);
 
 			// specify a Mapper
@@ -51,18 +53,45 @@ public class GpsTopKDriver extends Configured implements Tool {
 
 			// specify output types
 			job.setOutputKeyClass(Text.class);
-			job.setOutputValueClass(FloatWritable.class);
+			job.setOutputValueClass(IntWritable.class);
 
 			// specify input and output directories
 			FileInputFormat.addInputPath(job, inputPath);
 			job.setInputFormatClass(TextInputFormat.class);
 
-			FileOutputFormat.setOutputPath(job, outputPath);
+			FileOutputFormat.setOutputPath(job, intermediate);
 			job.setOutputFormatClass(TextOutputFormat.class);
 
 			job.setNumReduceTasks(1);
 
-			return (job.waitForCompletion(true) ? 0 : 1);
+			if (!job.waitForCompletion(true)) {
+				return 1;
+			}
+			
+			Job job2 = new Job(conf, "TopKRatio");
+			job2.setJarByClass(GpsTopKDriver.class);
+
+			// specify a Mapper
+			job2.setMapperClass(GpsTopKMapper.class);
+
+			// specify a Reducer
+			job2.setReducerClass(GpsTopKReducer.class);
+
+			// specify output types
+			job2.setOutputKeyClass(Text.class);
+			job2.setOutputValueClass(FloatWritable.class);
+
+			// set the number of reducer to 1
+			job2.setNumReduceTasks(1);
+
+			// specify input and output directories
+			FileInputFormat.addInputPath(job2, intermediate);
+			job2.setInputFormatClass(KeyValueTextInputFormat.class);
+
+			FileOutputFormat.setOutputPath(job2, outputPath);
+			job2.setOutputFormatClass(TextOutputFormat.class);
+
+			return (job2.waitForCompletion(true) ? 0 : 1);
 
 		} catch (InterruptedException | ClassNotFoundException | IOException e) {
 			System.err.println("Error during mapreduce job.");
