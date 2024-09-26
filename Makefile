@@ -3,8 +3,8 @@ outputFolder = output
 
 outputFolders := gpsOutput earningOutput gpsRatioOutput intermediateRatio
 
-
-runType = r
+# egr
+runType = egr
 
 fetch_data:
 	wget https://storage.googleapis.com/cs378/taxi-data-sorted-small.csv
