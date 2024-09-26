@@ -26,11 +26,19 @@ public class GpsMapper extends Mapper<Object, Text, IntWritable, LongWritable> {
             String pickupTime = fields[2];
             String dropoffTime = fields[3];
 
-            float pickupLong = Float.parseFloat(fields[6]);
-            float pickupLat = Float.parseFloat(fields[7]);
-
-            float dropoffLong = Float.parseFloat(fields[8]);
-            float dropoffLat = Float.parseFloat(fields[9]);
+            float pickupLong = 0;
+            float pickupLat = 0;
+            float dropoffLong = 0;
+            float dropoffLat = 0;
+            try {
+                pickupLong = Float.parseFloat(fields[6]);
+                pickupLat = Float.parseFloat(fields[7]);
+                dropoffLong = Float.parseFloat(fields[8]);
+                dropoffLat = Float.parseFloat(fields[9]);
+            }
+            catch(Exception e) {
+            }
+            
 
             if (fields[6].length() == 0 || fields[7].length() == 0 ||
                     pickupLat == 0 || pickupLong == 0) {

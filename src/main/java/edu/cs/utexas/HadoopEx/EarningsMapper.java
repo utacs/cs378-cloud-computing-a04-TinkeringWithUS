@@ -29,8 +29,14 @@ public class EarningsMapper extends Mapper<Object, Text, Text, Text> {
         String driverId = fields[1];
 
         if(errorType != ErrorType.INVALID_LINE) {
-            Float totalAmount = Float.parseFloat(fields[16]) ;
-            Float tripTimeSeconds = Float.parseFloat(fields[4]);
+            Float totalAmount = 0f;
+            Float tripTimeSeconds = 0f;
+            try {
+                totalAmount = Float.parseFloat(fields[16]);
+                tripTimeSeconds = Float.parseFloat(fields[4]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             word.set(driverId);
 
