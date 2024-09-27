@@ -1,7 +1,7 @@
 inputFile = taxi-data-sorted-small.csv 
 outputFolder = output
 
-outputFolders := gpsOutput earningOutput gpsRatioOutput intermediateRatio
+outputFolders := gpsOutput2 earningOutput gpsRatioOutput intermediateRatio
 
 # egr
 runType = egr
@@ -12,7 +12,7 @@ fetch_data:
 run: 
 	mvn clean package  
 	rm -rf $(outputFolders)
-	java -jar target/MapReduce-WordCount-example-0.1-SNAPSHOT-jar-with-dependencies.jar $(runType) $(inputFile) $(outputFolder) 
+	java -jar target/MapReduce-WordCount-example-0.1-SNAPSHOT-jar-with-dependencies.jar $(runType) $(inputFile) $(outputFolders) 
 
 add: 
 	mvn clean

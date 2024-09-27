@@ -37,7 +37,7 @@ public class GpsTopKDriver extends Configured implements Tool {
 	public int run(String args[]) {
 		Path inputPath = new Path(args[0]);
 		Path outputPath = new Path(args[1]);
-		Path intermediate = new Path("intermediateRatio");
+		Path intermediate = new Path(args[2]);
 
 		try {
 			Configuration conf = new Configuration();

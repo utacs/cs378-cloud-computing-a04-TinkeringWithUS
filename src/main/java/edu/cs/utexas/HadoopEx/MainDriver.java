@@ -29,7 +29,7 @@ public class MainDriver {
         int results = 0;
 
         if (jobsToRun.contains(REDUCE_EARNINGS)) {
-            String[] earningArgs = new String[] { inputFile, "earningOutput" };
+            String[] earningArgs = new String[] { inputFile, args[3] };
 
             int tempResult = ToolRunner.run(new Configuration(), new EarningDriver(), earningArgs);
 
@@ -43,7 +43,7 @@ public class MainDriver {
         }
 
         if (jobsToRun.contains(REDUCE_GPS)) {
-            String[] gpsArgs = new String[] { inputFile, "gpsOutput" };
+            String[] gpsArgs = new String[] { inputFile, args[2] };
 
             int tempResult = ToolRunner.run(new Configuration(), new GpsDriver(), gpsArgs);
 
@@ -57,7 +57,7 @@ public class MainDriver {
         }
 
         if (jobsToRun.contains(REDUCE_GPS_RATIO)) {
-            String[] gpsRatioArgs = new String[] { inputFile, "gpsRatioOutput" };
+            String[] gpsRatioArgs = new String[] { inputFile, args[4], args[5] };
 
             int tempResult = ToolRunner.run(new Configuration(), new GpsTopKDriver(), gpsRatioArgs);
 
